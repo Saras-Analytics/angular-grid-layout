@@ -13,6 +13,7 @@ export type LayoutItem = {
     x: number;
     y: number;
     id: string;
+    data?: any;
     minW?: number;
     minH?: number;
     maxW?: number;
@@ -113,6 +114,7 @@ export function cloneLayoutItem(layoutItem: LayoutItem): LayoutItem {
         static: !!layoutItem.static,
     };
 
+    if (layoutItem.data !== undefined) { clonedLayoutItem.data = layoutItem.data; }
     if (layoutItem.minW !== undefined) { clonedLayoutItem.minW = layoutItem.minW;}
     if (layoutItem.maxW !== undefined) { clonedLayoutItem.maxW = layoutItem.maxW;}
     if (layoutItem.minH !== undefined) { clonedLayoutItem.minH = layoutItem.minH;}

@@ -465,7 +465,8 @@ export class KtdGridComponent implements OnChanges, AfterContentInit, AfterConte
                                     x: item.x,
                                     y: item.y,
                                     w: item.w,
-                                    h: item.h
+                                    h: item.h,
+                                    data: item.data
                                 })) as KtdGridLayout);
                             } else {
                                 // TODO: Need we really to emit if there is no layout change but drag started and ended?

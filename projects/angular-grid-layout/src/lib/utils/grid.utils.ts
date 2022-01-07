@@ -17,7 +17,7 @@ export function ktdTrackById(index: number, item: {id: string}) {
 export function ktdGridCompact(layout: KtdGridLayout, compactType: KtdGridCompactType, cols: number): KtdGridLayout {
     return compact(layout, compactType, cols)
         // Prune react-grid-layout compact extra properties.
-        .map(item => ({id: item.id, x: item.x, y: item.y, w: item.w, h: item.h}));
+        .map(item => ({id: item.id, x: item.x, y: item.y, w: item.w, h: item.h, data: item.data}));
 }
 
 function screenXPosToGridValue(screenXPos: number, cols: number, width: number): number {

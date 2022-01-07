@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { KtdGridComponent, KtdGridLayout, ktdTrackById } from '@katoid/angular-grid-layout';
+import { KtdGridComponent, KtdGridLayout, ktdTrackById } from '@saras-analytics/angular-grid-layout';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { countriesPopulation, countriesPopulationByYear } from './data/countries-population.data';
@@ -12,7 +12,7 @@ import { DOCUMENT } from '@angular/common';
     styleUrls: ['./real-life-example.component.scss']
 })
 export class KtdRealLifeExampleComponent implements OnInit, OnDestroy {
-    @ViewChild(KtdGridComponent, {static: true}) grid: KtdGridComponent;
+    @ViewChild(KtdGridComponent, { static: true }) grid: KtdGridComponent;
     @ViewChildren(AreaChartStackedComponent) areaCharts: QueryList<AreaChartStackedComponent>;
 
     trackById = ktdTrackById;
@@ -20,15 +20,15 @@ export class KtdRealLifeExampleComponent implements OnInit, OnDestroy {
     rowHeight = 50;
     compactType: 'vertical' | 'horizontal' | null = 'vertical';
     layout = [
-        {id: '0', x: 0, y: 5, w: 4, h: 10},
-        {id: '1', x: 4, y: 5, w: 4, h: 10},
-        {id: '2', x: 2, y: 0, w: 6, h: 5},
-        {id: '5', x: 8, y: 0, w: 4, h: 5},
-        {id: '3', x: 0, y: 0, w: 2, h: 5},
-        {id: '4', x: 8, y: 5, w: 4, h: 10}
+        { id: '0', x: 0, y: 5, w: 4, h: 10 },
+        { id: '1', x: 4, y: 5, w: 4, h: 10 },
+        { id: '2', x: 2, y: 0, w: 6, h: 5 },
+        { id: '5', x: 8, y: 0, w: 4, h: 5 },
+        { id: '3', x: 0, y: 0, w: 2, h: 5 },
+        { id: '4', x: 8, y: 5, w: 4, h: 10 }
     ];
 
-    layoutSizes: {[id: string]: [number, number]} = {};
+    layoutSizes: { [id: string]: [number, number] } = {};
 
 
     countriesPopulation: any[] = countriesPopulation;

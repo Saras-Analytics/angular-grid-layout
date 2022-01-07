@@ -4,7 +4,7 @@ import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 import {
     KtdDragEnd, KtdDragStart, KtdGridComponent, KtdGridLayout, KtdGridLayoutItem, KtdResizeEnd, KtdResizeStart, ktdTrackById
-} from '@katoid/angular-grid-layout';
+} from '@saras-analytics/angular-grid-layout';
 import { ktdArrayRemoveItem } from '../utils';
 import { DOCUMENT } from '@angular/common';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
@@ -15,37 +15,37 @@ import { coerceNumberProperty } from '@angular/cdk/coercion';
     styleUrls: ['./playground.component.scss']
 })
 export class KtdPlaygroundComponent implements OnInit, OnDestroy {
-    @ViewChild(KtdGridComponent, {static: true}) grid: KtdGridComponent;
+    @ViewChild(KtdGridComponent, { static: true }) grid: KtdGridComponent;
     trackById = ktdTrackById;
 
     cols = 12;
     rowHeight = 50;
     compactType: 'vertical' | 'horizontal' | null = 'vertical';
     layout: KtdGridLayout = [
-        {id: '0', x: 5, y: 0, w: 2, h: 3},
-        {id: '1', x: 2, y: 2, w: 1, h: 2},
-        {id: '2', x: 3, y: 7, w: 1, h: 2},
-        {id: '3', x: 2, y: 0, w: 3, h: 2},
-        {id: '4', x: 5, y: 3, w: 2, h: 3},
-        {id: '5', x: 0, y: 4, w: 1, h: 3},
-        {id: '6', x: 9, y: 0, w: 2, h: 4},
-        {id: '7', x: 9, y: 4, w: 2, h: 2},
-        {id: '8', x: 3, y: 2, w: 2, h: 5},
-        {id: '9', x: 7, y: 0, w: 1, h: 3},
-        {id: '10', x: 2, y: 4, w: 1, h: 4},
-        {id: '11', x: 0, y: 0, w: 2, h: 4}
+        { id: '0', x: 5, y: 0, w: 2, h: 3 },
+        { id: '1', x: 2, y: 2, w: 1, h: 2 },
+        { id: '2', x: 3, y: 7, w: 1, h: 2 },
+        { id: '3', x: 2, y: 0, w: 3, h: 2 },
+        { id: '4', x: 5, y: 3, w: 2, h: 3 },
+        { id: '5', x: 0, y: 4, w: 1, h: 3 },
+        { id: '6', x: 9, y: 0, w: 2, h: 4 },
+        { id: '7', x: 9, y: 4, w: 2, h: 2 },
+        { id: '8', x: 3, y: 2, w: 2, h: 5 },
+        { id: '9', x: 7, y: 0, w: 1, h: 3 },
+        { id: '10', x: 2, y: 4, w: 1, h: 4 },
+        { id: '11', x: 0, y: 0, w: 2, h: 4 }
     ];
     transitions: { name: string, value: string }[] = [
-        {name: 'ease', value: 'transform 500ms ease, width 500ms ease, height 500ms ease'},
-        {name: 'ease-out', value: 'transform 500ms ease-out, width 500ms ease-out, height 500ms ease-out'},
-        {name: 'linear', value: 'transform 500ms linear, width 500ms linear, height 500ms linear'},
+        { name: 'ease', value: 'transform 500ms ease, width 500ms ease, height 500ms ease' },
+        { name: 'ease-out', value: 'transform 500ms ease-out, width 500ms ease-out, height 500ms ease-out' },
+        { name: 'linear', value: 'transform 500ms linear, width 500ms linear, height 500ms linear' },
         {
             name: 'overflowing',
             value: 'transform 500ms cubic-bezier(.28,.49,.79,1.35), width 500ms cubic-bezier(.28,.49,.79,1.35), height 500ms cubic-bezier(.28,.49,.79,1.35)'
         },
-        {name: 'fast', value: 'transform 200ms ease, width 200ms linear, height 200ms linear'},
-        {name: 'slow-motion', value: 'transform 1000ms linear, width 1000ms linear, height 1000ms linear'},
-        {name: 'transform-only', value: 'transform 500ms ease'},
+        { name: 'fast', value: 'transform 200ms ease, width 200ms linear, height 200ms linear' },
+        { name: 'slow-motion', value: 'transform 1000ms linear, width 1000ms linear, height 1000ms linear' },
+        { name: 'transform-only', value: 'transform 500ms ease' },
     ];
     currentTransition: string = this.transitions[0].value;
 

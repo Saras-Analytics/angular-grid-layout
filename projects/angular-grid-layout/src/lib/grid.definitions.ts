@@ -7,6 +7,7 @@ export interface KtdGridLayoutItem {
     y: number;
     w: number;
     h: number;
+    data?: any;
 }
 
 export type KtdGridCompactType = CompactType;

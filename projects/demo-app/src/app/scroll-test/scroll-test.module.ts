@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { KtdScrollTestComponent } from './scroll-test.component';
 import { RouterModule, Routes } from '@angular/router';
-import { KtdGridModule } from '@katoid/angular-grid-layout';
+import { KtdGridModule } from '@saras-analytics/angular-grid-layout';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 const routes: Routes = [
-    {path: 'scroll-test', component: KtdScrollTestComponent},
+    { path: 'scroll-test', component: KtdScrollTestComponent },
 ];
 
 @NgModule({
@@ -22,4 +22,4 @@ const routes: Routes = [
         MatInputModule
     ]
 })
-export class KtdScrollTestModule {}
+export class KtdScrollTestModule { }
