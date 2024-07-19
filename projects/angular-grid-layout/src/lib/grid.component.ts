@@ -80,7 +80,7 @@ function getGridHeight(layout: KtdGridLayout, rowHeight: number, gap: number): n
     return layout.reduce((acc, cur) => Math.max(acc, (cur.y + cur.h) * rowHeight + Math.max(cur.y + cur.h - 1, 0) * gap), 0);
 }
 
-// eslint-disable-next-line @katoid/prefix-exported-code
+// eslint-disable-next-line @saras-analytics/prefix-exported-code
 export function parseRenderItemToPixels(renderItem: KtdGridItemRenderData<number>): KtdGridItemRenderData<string> {
     return {
         id: renderItem.id,
@@ -91,7 +91,7 @@ export function parseRenderItemToPixels(renderItem: KtdGridItemRenderData<number
     };
 }
 
-// eslint-disable-next-line @katoid/prefix-exported-code
+// eslint-disable-next-line @saras-analytics/prefix-exported-code
 export function __gridItemGetRenderDataFactoryFunc(gridCmp: KtdGridComponent) {
     return function(id: string) {
         return parseRenderItemToPixels(gridCmp.getItemRenderData(id));
@@ -631,6 +631,7 @@ export class KtdGridComponent implements OnChanges, AfterContentInit, AfterConte
                                     minH: item.minH,
                                     maxW: item.maxW,
                                     maxH: item.maxH,
+                                    data: item.data,
                                 })) as KtdGridLayout);
                             } else {
                                 // TODO: Need we really to emit if there is no layout change but drag started and ended?

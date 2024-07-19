@@ -16,14 +16,14 @@
                 "createDefaultProgram": true
             },
             "plugins": [
-                "@katoid"
+                "@saras-analytics"
             ],
             "extends": [
                 "plugin:@angular-eslint/recommended",
                 "plugin:@angular-eslint/template/process-inline-templates"
             ],
             "rules": {
-                "@katoid/prefix-exported-code": [
+                "@saras-analytics/prefix-exported-code": [
                     "error",
                     {
                         "prefix": "ktd",

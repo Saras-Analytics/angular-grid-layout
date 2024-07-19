@@ -1,16 +1,16 @@
 {
-    "name": "@katoid/angular-grid-layout",
+    "name": "@saras-analytics/angular-grid-layout",
     "description": "Grid Layout with draggable and resizable items for Angular",
-    "homepage": "https://github.com/katoid/angular-grid-layout",
+    "homepage": "https://github.com/saras-analytics/angular-grid-layout",
     "bugs": {
-        "url": "https://github.com/katoid/angular-grid-layout/issues"
+        "url": "https://github.com/saras-analytics/angular-grid-layout/issues"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/katoid/angular-grid-layout.git"
+        "url": "git+https://github.com/saras-analytics/angular-grid-layout.git"
     },
     "license": "MIT",
-    "version": "2.2.0",
+    "version": "18.0.0",
     "keywords": [
         "angular",
         "grid",
@@ -20,8 +20,8 @@
         "angular-layout"
     ],
     "peerDependencies": {
-        "@angular/common": ">=17.0.0",
-        "@angular/core": ">=17.0.0"
+        "@angular/common": ">=18.0.0",
+        "@angular/core": ">=18.0.0"
     },
     "dependencies": {
         "tslib": "^2.3.1"

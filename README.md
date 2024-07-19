@@ -1,5 +1,5 @@
 # Angular Grid Layout
-[![npm](https://img.shields.io/npm/v/@katoid/angular-grid-layout?style=flat-square)](https://www.npmjs.com/package/@katoid/angular-grid-layout)
+[![npm](https://img.shields.io/npm/v/@saras-analytics/angular-grid-layout?style=flat-square)](https://www.npmjs.com/package/@saras-analytics/angular-grid-layout)
 [![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg?style=flat-square)](https://github.com/katoid/angular-grid-layout/blob/main/LICENSE.md)
 [![commitizen](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](https://github.com/katoid/angular-grid-layout/commits/main)
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/katoid/angular-grid-layout/compare)
@@ -39,17 +39,17 @@ Both cover the same necessities.
 
 ## Installation
 
-To use @katoid/angular-grid-layout in your project install it via [npm](https://www.npmjs.com/package/@katoid/angular-grid-layout):
+To use @saras-analytics/angular-grid-layout in your project install it via [npm](https://www.npmjs.com/package/@saras-analytics/angular-grid-layout):
 
 ```
-npm install @katoid/angular-grid-layout --save
+npm install @saras-analytics/angular-grid-layout --save
 ```
 
 ## Usage
 Import KtdGridModule to the module where you want to use the grid:
 
 ```ts
-import { KtdGridModule } from '@katoid/angular-grid-layout';
+import { KtdGridModule } from '@saras-analytics/angular-grid-layout';
 
 @NgModule({
   imports: [KtdGridModule]
@@ -75,7 +75,7 @@ Use it in your template:
 
 Where template variables could be:
 ```ts
-import { ktdTrackById } from '@katoid/angular-grid-layout';
+import { ktdTrackById } from '@saras-analytics/angular-grid-layout';
 
 cols: number = 6;
 rowHeight: number = 100;

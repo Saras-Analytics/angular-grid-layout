@@ -55,28 +55,29 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/demo-app",
+            "outputPath": {
+              "base": "dist/demo-app"
+            },
             "index": "projects/demo-app/src/index.html",
-            "main": "projects/demo-app/src/main.ts",
-            "polyfills": "projects/demo-app/src/polyfills.ts",
+            "polyfills": [
+              "projects/demo-app/src/polyfills.ts"
+            ],
             "tsConfig": "projects/demo-app/tsconfig.app.json",
             "assets": [
               "projects/demo-app/src/favicon.ico",
               "projects/demo-app/src/assets"
             ],
             "styles": [
-              "projects/demo-app/src/styles/theme.scss",
               "projects/demo-app/src/styles/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "browser": "projects/demo-app/src/main.ts"
           },
           "configurations": {
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
@@ -93,8 +94,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -140,7 +139,6 @@
               "projects/demo-app/src/assets"
             ],
             "styles": [
-              "projects/demo-app/src/styles/theme.scss",
               "projects/demo-app/src/styles/styles.scss"
             ],
             "scripts": []
@@ -157,10 +155,6 @@
               "devServerTarget": "demo-app:serve:production"
             }
           }
-        },
-        "deploy": {
-          "builder": "angular-cli-ghpages:deploy",
-          "options": {}
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
