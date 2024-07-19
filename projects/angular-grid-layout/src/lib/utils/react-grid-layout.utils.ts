@@ -1,4 +1,3 @@
-
 /**
  * IMPORTANT:
  * This utils are taken from the project: https://github.com/STRML/react-grid-layout.
@@ -6,18 +5,18 @@
  */
 
 // Disable lint since we don't want to modify this code
-// tslint:disable
+/* eslint-disable */
 export type LayoutItem = {
     w: number;
     h: number;
     x: number;
     y: number;
     id: string;
-    data?: any;
     minW?: number;
     minH?: number;
     maxW?: number;
     maxH?: number;
+    data?: any;
     moved?: boolean;
     static?: boolean;
     isDraggable?: boolean | null | undefined;
@@ -114,11 +113,11 @@ export function cloneLayoutItem(layoutItem: LayoutItem): LayoutItem {
         static: !!layoutItem.static,
     };
 
-    if (layoutItem.data !== undefined) { clonedLayoutItem.data = layoutItem.data; }
     if (layoutItem.minW !== undefined) { clonedLayoutItem.minW = layoutItem.minW;}
     if (layoutItem.maxW !== undefined) { clonedLayoutItem.maxW = layoutItem.maxW;}
     if (layoutItem.minH !== undefined) { clonedLayoutItem.minH = layoutItem.minH;}
     if (layoutItem.maxH !== undefined) { clonedLayoutItem.maxH = layoutItem.maxH;}
+    if (layoutItem.data !== undefined) { clonedLayoutItem.data = layoutItem.data;}
     // These can be null
     if (layoutItem.isDraggable !== undefined) { clonedLayoutItem.isDraggable = layoutItem.isDraggable;}
     if (layoutItem.isResizable !== undefined) { clonedLayoutItem.isResizable = layoutItem.isResizable;}
@@ -259,7 +258,6 @@ export function compactItem(
             l.y--;
         }
     } else if (compactH) {
-        l.y = Math.min(bottom(compareWith), l.y);
         // Move the element left as far as it can go without colliding.
         while (l.x > 0 && !getFirstCollision(compareWith, l)) {
             l.x--;
@@ -270,26 +268,26 @@ export function compactItem(
     let collides;
     while ((collides = getFirstCollision(compareWith, l))) {
         if (compactH) {
-            resolveCompactionCollision(
-                fullLayout,
-                l,
-                collides.x + collides.w,
-                'x',
-            );
+            resolveCompactionCollision(fullLayout, l, collides.x + collides.w, 'x');
         } else {
-            resolveCompactionCollision(
-                fullLayout,
-                l,
-                collides.y + collides.h,
-                'y',
-            );
+            resolveCompactionCollision(fullLayout, l, collides.y + collides.h, 'y',);
         }
         // Since we can't grow without bounds horizontally, if we've overflown, let's move it down and try again.
         if (compactH && l.x + l.w > cols) {
             l.x = cols - l.w;
             l.y++;
+
+            // ALso move element as left as much as we can (ktd-custom-change)
+            while (l.x > 0 && !getFirstCollision(compareWith, l)) {
+                l.x--;
+            }
         }
     }
+
+    // Ensure that there are no negative positions
+    l.y = Math.max(l.y, 0);
+    l.x = Math.max(l.x, 0);
+
     return l;
 }
 
@@ -435,8 +433,8 @@ export function moveElement(
         compactType === 'vertical' && typeof y === 'number'
             ? oldY >= y
             : compactType === 'horizontal' && typeof x === 'number'
-            ? oldX >= x
-            : false;
+                ? oldX >= x
+                : false;
     if (movingUp) {
         sorted = sorted.reverse();
     }
@@ -616,7 +614,7 @@ export function sortLayoutItems(
 }
 
 export function sortLayoutItemsByRowCol(layout: Layout): Layout {
-    return ([] as any[]).concat(layout).sort(function (a, b) {
+    return ([] as any[]).concat(layout).sort(function(a, b) {
         if (a.y > b.y || (a.y === b.y && a.x > b.x)) {
             return 1;
         } else if (a.y === b.y && a.x === b.x) {
@@ -628,7 +626,7 @@ export function sortLayoutItemsByRowCol(layout: Layout): Layout {
 }
 
 export function sortLayoutItemsByColRow(layout: Layout): Layout {
-    return ([] as any[]).concat(layout).sort(function (a, b) {
+    return ([] as any[]).concat(layout).sort(function(a, b) {
         if (a.x > b.x || (a.x === b.x && a.y > b.y)) {
             return 1;
         }

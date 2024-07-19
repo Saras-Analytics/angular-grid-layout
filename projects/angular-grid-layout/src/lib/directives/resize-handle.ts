@@ -10,12 +10,15 @@ export const KTD_GRID_RESIZE_HANDLE = new InjectionToken<KtdGridResizeHandle>('K
 
 /** Handle that can be used to drag a KtdGridItem instance. */
 @Directive({
+    standalone: true,
     selector: '[ktdGridResizeHandle]',
+    // eslint-disable-next-line @angular-eslint/no-host-metadata-property
     host: {
         class: 'ktd-grid-resize-handle'
     },
     providers: [{provide: KTD_GRID_RESIZE_HANDLE, useExisting: KtdGridResizeHandle}],
 })
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class KtdGridResizeHandle {
 
     constructor(

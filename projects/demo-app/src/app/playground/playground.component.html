@@ -1,11 +1,10 @@
-<h1>Angular Grid Layout - Playground</h1>
 <div class="playground-container">
     <div class="layout-json">
     </div>
     <div class="controls-container">
         <button mat-raised-button (click)="generateLayout()">Generate layout</button>
         <button mat-raised-button (click)="addItemToLayout()">Add item</button>
-        <mat-form-field color="accent">
+        <mat-form-field color="accent" style="width: 150px;">
             <mat-label>Compact type</mat-label>
             <mat-select [value]="compactType" (selectionChange)="onCompactTypeChange($event)">
                 <mat-option [value]="'vertical'">vertical</mat-option>
@@ -13,24 +12,51 @@
                 <mat-option [value]="'none'">-</mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field color="accent" style="width: 64px">
+        <mat-form-field color="accent" style="width: 84px">
             <mat-label>Columns</mat-label>
             <input matInput type="number" [value]="cols + ''" (input)="onColsChange($event)">
         </mat-form-field>
-        <mat-form-field color="accent" style="width: 64px">
-            <mat-label>Row height</mat-label>
-            <input matInput type="number" [value]="rowHeight + ''" (input)="onRowHeightChange($event)">
+        <div>
+            <mat-form-field color="accent" style="width: 100px">
+                <mat-label>Row height</mat-label>
+                <input matInput
+                    type="number"
+                    [value]="rowHeight + ''"
+                    [disabled]="rowHeightFit"
+                    (input)="onRowHeightChange($event)">
+            </mat-form-field>
+            <mat-checkbox (change)="onRowHeightFitChange($event)">Fit</mat-checkbox>
+        </div>
+        <mat-form-field color="accent" style="width: 94px">
+            <mat-label>Grid height</mat-label>
+            <input matInput
+                   type="number"
+                   [value]="gridHeight === null ? null : gridHeight + ''"
+                   [disabled]="!rowHeightFit"
+                   (input)="onGridHeightChange($event)">
         </mat-form-field>
         <mat-form-field color="accent" style="width: 128px">
             <mat-label>Drag Threshold</mat-label>
             <input matInput type="number" [value]="dragStartThreshold + ''" (input)="onDragStartThresholdChange($event)">
         </mat-form-field>
-        <mat-form-field color="accent">
+        <mat-form-field style="width: 84px;">
+            <mat-label>Gap</mat-label>
+            <input matInput type="number" [value]="gap" (input)="onGapChange($event)">
+        </mat-form-field>
+        <mat-form-field color="accent" style="width: 164px;">
             <mat-label>Transition type</mat-label>
             <mat-select [value]="currentTransition" (selectionChange)="onTransitionChange($event)">
                 <mat-option *ngFor="let transition of transitions" [value]="transition.value">{{transition.name}}</mat-option>
             </mat-select>
         </mat-form-field>
+
+        <mat-form-field *ngIf="placeholders && placeholders.length > 0" color="accent" style="width: 184px;">
+            <mat-label>Custom Placeholder</mat-label>
+            <mat-select [value]="currentPlaceholder" (selectionChange)="onPlaceholderChange($event)">
+                <mat-option *ngFor="let placeholder of placeholders" [value]="placeholder">{{placeholder}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
         <mat-checkbox color="accent"
                       [checked]="autoScroll"
                       (change)="onAutoScrollChange($event.checked)">
@@ -61,20 +87,85 @@
                       (change)="onPreventCollisionChange($event.checked)">
             Prevent Collision
         </mat-checkbox>
-        <mat-chip-list>
-            <mat-chip color="accent" [selected]="isDragging">isDragging</mat-chip>
-            <mat-chip color="accent" [selected]="isResizing">isResizing</mat-chip>
-        </mat-chip-list>
+        <mat-chip-listbox>
+            <mat-chip-option color="accent" [selected]="isDragging">isDragging</mat-chip-option>
+            <mat-chip-option color="accent" [selected]="isResizing">isResizing</mat-chip-option>
+        </mat-chip-listbox>
+        <div class="grid-background-container">
+            <div style="margin-right: 6px">Background grid</div>
+            <div class="grid-background">
+                <span>
+                    <span>show</span>
+                 <mat-select [value]="getCurrentBackgroundVisibility()"
+                             (selectionChange)="gridBackgroundShowChange($event)">
+                  <mat-option *ngFor="let option of gridBackgroundVisibilityOptions" [value]="option">{{option}}</mat-option>
+                </mat-select>
+                </span>
+
+                <span>
+                    <span>border px</span>
+                    <input
+                        #borderWidth
+                        id="borderWidth"
+                        type="number"
+                        [value]="gridBackgroundConfig.borderWidth"
+                        (change)="updateGridBgBorderWidth(borderWidth.value)">
+                </span>
+
+                <span>
+                    <span>border</span>
+                    <input
+                        [style.background]="gridBackgroundConfig.borderColor"
+                        [colorPicker]="gridBackgroundConfig.borderColor"
+                        (colorPickerChange)="updateGridBgColor($event, 'borderColor')"
+                        [cpAlphaChannel]="'enabled'"
+                        [cpOutputFormat]="'rgba'">
+                </span>
+
+                <span>
+                    <span>gap</span>
+                    <input
+                        [style.background]="gridBackgroundConfig.gapColor"
+                        [colorPicker]="gridBackgroundConfig.gapColor"
+                        (colorPickerChange)="updateGridBgColor($event, 'gapColor')"
+                        [cpAlphaChannel]="'enabled'"
+                        [cpOutputFormat]="'rgba'">
+                </span>
+
+                <span>
+                    <span>row</span>
+                    <input
+                        [style.background]="gridBackgroundConfig.rowColor"
+                        [colorPicker]="gridBackgroundConfig.rowColor"
+                        (colorPickerChange)="updateGridBgColor($event, 'rowColor')"
+                        [cpAlphaChannel]="'enabled'"
+                        [cpOutputFormat]="'rgba'">
+                </span>
+
+                <span>
+                    <span>column</span>
+                    <input
+                        [style.background]="gridBackgroundConfig.columnColor"
+                        [colorPicker]="gridBackgroundConfig.columnColor"
+                        (colorPickerChange)="updateGridBgColor($event, 'columnColor')"
+                        [cpAlphaChannel]="'enabled'"
+                        [cpOutputFormat]="'rgba'">
+                </span>
+            </div>
+        </div>
     </div>
 
     <div class="grid-container">
         <ktd-grid [cols]="cols"
-                  [rowHeight]="rowHeight"
+                  [backgroundConfig]="gridBackgroundConfig"
+                  [height]="rowHeightFit && gridHeight ? gridHeight : null"
+                  [rowHeight]="rowHeightFit ? 'fit' : rowHeight"
                   [layout]="layout"
                   [compactType]="compactType"
                   [preventCollision]="preventCollision"
                   [scrollableParent]="autoScroll ? document : null"
-                  scrollSpeed="4"
+                  [gap]="gap"
+                  [scrollSpeed]="4"
                   (dragStarted)="onDragStarted($event)"
                   (resizeStarted)="onResizeStarted($event)"
                   (dragEnded)="onDragEnded($event)"
@@ -92,13 +183,16 @@
                      (mousedown)="stopEventPropagation($event)"
                      (click)="removeItem(item.id)">
                 </div>
+                <ng-template *ngIf="currentPlaceholder !== 'Default'" ktdGridItemPlaceholder>
+                    <div *ngIf="currentPlaceholder === 'Custom 1'"
+                         class="grid-item-content custom-placeholder custom-placeholder-1">{{item.id}}</div>
+                    <div *ngIf="currentPlaceholder === 'Custom 2'"
+                         class="grid-item-content custom-placeholder custom-placeholder-2">{{item.id}}</div>
+                    <div *ngIf="currentPlaceholder === 'Custom 3'"
+                         class="grid-item-content custom-placeholder custom-placeholder-3">{{item.id}}</div>
+                </ng-template>
             </ktd-grid-item>
         </ktd-grid>
     </div>
 </div>
-<h2 style="margin-top: 16px">Other examples: </h2>
-<div style="display: flex; flex-direction: column">
-    <a [routerLink]="['/custom-handles']">Custom handles</a>
-    <a [routerLink]="['/real-life-example']">Real life example</a>
-    <a [routerLink]="['/scroll-test']">Scroll test</a>
-</div>
+<ktd-footer></ktd-footer>

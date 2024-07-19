@@ -1,4 +1,3 @@
-<h1>Angular Grid Layout - Scroll test</h1>
 <mat-form-field color="accent">
     <mat-label>Scroll Speed</mat-label>
     <input matInput type="number" [value]="scrollSpeed + ''" (input)="onScrollSpeedChange($event)">
@@ -39,11 +38,5 @@
         </div>
     </div>
 </div>
-
-<h2 style="margin-top: 16px">Other examples: </h2>
-<div style="display: flex; flex-direction: column">
-    <a [routerLink]="['/playground']">Playground</a>
-    <a [routerLink]="['/custom-handles']">Custom handles</a>
-    <a [routerLink]="['/real-life-example']">Real life example</a>
-</div>
+<ktd-footer></ktd-footer>
 

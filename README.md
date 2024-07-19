@@ -1,5 +1,5 @@
 # Angular Grid Layout
-[![npm](https://img.shields.io/npm/v/@katoid/angular-grid-layout?style=flat-square)](https://www.npmjs.com/package/@katoid/angular-grid-layout)
+[![npm](https://img.shields.io/npm/v/@saras-analytics/angular-grid-layout?style=flat-square)](https://www.npmjs.com/package/@saras-analytics/angular-grid-layout)
 [![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg?style=flat-square)](https://github.com/katoid/angular-grid-layout/blob/main/LICENSE.md)
 [![commitizen](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](https://github.com/katoid/angular-grid-layout/commits/main)
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/katoid/angular-grid-layout/compare)
@@ -23,6 +23,13 @@ Both cover the same necessities.
 - Supports touch devices
 - Auto-scrolling while dragging
 
+## Compatibility
+| Version              | Compatibility       |
+|----------------------|---------------------|
+| \>= 2.0.0            | Angular 14 & 15     |
+| \>= 1.1.0 && < 2.0.0 | Angular 12, 13 & 14 |
+| \>= 0.1.1 && < 1.1.0 | Angular 9, 10 & 11  |
+
 ## Demos
 [Playground](https://katoid.github.io/angular-grid-layout/playground) - [Stackblitz](https://stackblitz.com/edit/angular-grid-layout-playground?file=src%2Fapp%2Fplayground%2Fplayground.component.ts)
 
@@ -32,17 +39,17 @@ Both cover the same necessities.
 
 ## Installation
 
-To use @katoid/angular-grid-layout in your project install it via [npm](https://www.npmjs.com/package/@katoid/angular-grid-layout):
+To use @saras-analytics/angular-grid-layout in your project install it via [npm](https://www.npmjs.com/package/@saras-analytics/angular-grid-layout):
 
 ```
-npm install @katoid/angular-grid-layout --save
+npm install @saras-analytics/angular-grid-layout --save
 ```
 
 ## Usage
 Import KtdGridModule to the module where you want to use the grid:
 
 ```ts
-import { KtdGridModule } from '@katoid/angular-grid-layout';
+import { KtdGridModule } from '@saras-analytics/angular-grid-layout';
 
 @NgModule({
   imports: [KtdGridModule]
@@ -57,21 +64,26 @@ Use it in your template:
           (layoutUpdated)="onLayoutUpdated($event)">
     <ktd-grid-item *ngFor="let item of layout; trackBy:trackById" [id]="item.id">
         <!-- Your grid item content goes here -->
+
+        <!-- Optional Custom placeholder template -->
+        <ng-template ktdGridItemPlaceholder>
+            <!-- Custom placeholder content goes here -->
+        </ng-template>
     </ktd-grid-item>
 </ktd-grid>
 ```
 
 Where template variables could be:
 ```ts
-import { ktdTrackById } from '@katoid/angular-grid-layout';
+import { ktdTrackById } from '@saras-analytics/angular-grid-layout';
 
 cols: number = 6;
 rowHeight: number = 100;
 layout: KtdGridLayout = [
     {id: '0', x: 0, y: 0, w: 3, h: 3},
     {id: '1', x: 3, y: 0, w: 3, h: 3},
-    {id: '2', x: 0, y: 3, w: 3, h: 3},
-    {id: '3', x: 3, y: 3, w: 3, h: 3},
+    {id: '2', x: 0, y: 3, w: 3, h: 3, minW: 2, minH: 3},
+    {id: '3', x: 3, y: 3, w: 3, h: 3, minW: 2, maxW: 3, minH: 2, maxH: 5},
 ];
 trackById = ktdTrackById
 ```
@@ -85,14 +97,29 @@ Here is listed the basic API of both KtdGridComponent and KtdGridItemComponent. 
 /** Type of compaction that will be applied to the layout (vertical, horizontal or free). Defaults to 'vertical' */
 @Input() compactType: KtdGridCompactType = 'vertical';
 
-/** Row height in css pixels */
-@Input() rowHeight: number = 100;
+/**
+ * Row height as number or as 'fit'.
+ * If rowHeight is a number value, it means that each row would have those css pixels in height.
+ * if rowHeight is 'fit', it means that rows will fit in the height available. If 'fit' value is set, a 'height' should be also provided.
+ */
+@Input() rowHeight: number | 'fit' = 100;
 
 /** Number of columns  */
 @Input() cols: number = 6;
 
 /** Layout of the grid. Array of all the grid items with its 'id' and position on the grid. */
 @Input() layout: KtdGridLayout;
+
+/** Grid gap in css pixels */
+@Input() gap: number = 0;
+
+/**
+ * If height is a number, fixes the height of the grid to it, recommended when rowHeight = 'fit' is used.
+ * If height is null, height will be automatically set according to its inner grid items.
+ * Defaults to null.
+ * */
+@Input() height: number | null = null;
+
 
 /**
  * Parent element that contains the scroll. If an string is provided it would search that element by id on the dom.
@@ -124,14 +151,24 @@ Here is listed the basic API of both KtdGridComponent and KtdGridItemComponent. 
 /** Emits when resize ends */
 @Output() resizeEnded: EventEmitter<KtdResizeEnd> = new EventEmitter<KtdResizeEnd>();
 
+/** Emits when a grid item is being resized and its bounds have changed */
+@Output() gridItemResize: EventEmitter<KtdGridItemResizeEvent> = new EventEmitter<KtdGridItemResizeEvent>();
+
 ```
 
 #### KtdGridItem
 ```ts
+
 /** Id of the grid item. This property is strictly compulsory. */
 @Input() id: string;
 
-/** Whether the item is draggable or not. Defaults to true. */
+/** Min and max sizes of the grid item. Any of these would 'override' the min/max values specified in the layout. **/
+@Input() minW?: number;
+@Input() minH?: number;
+@Input() maxW?: number;
+@Input() maxH?: number;
+
+/** Whether the item is draggable or not. Defaults to true. Does not affect manual dragging using the startDragManually method. */
 @Input() draggable: boolean = true;
 
 /** Whether the item is resizable or not. Defaults to true. */
@@ -142,6 +179,15 @@ Here is listed the basic API of both KtdGridComponent and KtdGridItemComponent. 
 
 /** Minimum amount of pixels that the user should move before it starts the drag sequence. */
 @Input() dragStartThreshold: number = 0;
+
+/**
+ * To manually start dragging, route the desired pointer events to this method.
+ * Dragging initiated by this method will work regardless of the value of the draggable Input.
+ * It is the caller's responsibility to call this method with only the events that are desired to cause a drag.
+ * For example, if you only want left clicks to cause a drag, it is your responsibility to filter out other mouse button events.
+ * @param startEvent The pointer event that should initiate the drag.
+ */
+startDragManually(startEvent: MouseEvent | TouchEvent);
 ```
 
 
@@ -152,12 +198,12 @@ Here is listed the basic API of both KtdGridComponent and KtdGridItemComponent. 
 - [x] Add Real life example with charts and grid items with some kind of controls.
 - [x] Add dragStartThreshold option to grid items.
 - [x] Auto Scroll vertical/horizontal if container is scrollable when dragging a grid item. ([commit](https://github.com/katoid/angular-grid-layout/commit/d137d0e3f40cafdb5fdfd7b2bce4286670200c5d)).
-- [ ] Add grid gap feature.
-- [ ] rowHeight to support also 'fit' as value instead of only CSS pixels ([issue](https://github.com/katoid/angular-grid-layout/issues/1)).
+- [x] Grid support for minWidth/maxWidth and minHeight/maxHeight on grid items.
+- [x] Add grid gap feature. ([commit](https://github.com/katoid/angular-grid-layout/commit/a8b129d76cb7bf12a63ff92beee5d5bbb28046b3))
+- [x] Customizable drag placeholder. ([commit](https://github.com/katoid/angular-grid-layout/commit/ce7826522f67333359afcac4f10cb3cd4b76f7b0)).
+- [x] rowHeight to support also 'fit' as value instead of only CSS pixels ([commit](https://github.com/katoid/angular-grid-layout/commit/fe7d0e7af9e5ede885a34a9c4700df23012cd1a9)).
+- [x] Check grid compact horizontal algorithm, estrange behaviour when overflowing, also in react-grid-layout.
 - [ ] Grid support for static grid items.
-- [ ] Grid support for minWidth and minHeight on grid items.
-- [ ] Customizable drag placeholder.
-- [ ] Check grid compact horizontal algorithm, estrange behaviour when overflowing, also in react-grid-layout.
 - [ ] Add all other resize options (now is only available 'se-resize').
 - [ ] Documentation.
 
