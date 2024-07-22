@@ -21,7 +21,7 @@
             "dom"
         ],
         "paths": {
-            "@saras-analytics/angular-grid-layout": [
+            "@biva/angular-grid-layout": [
                 "dist/angular-grid-layout"
             ]
         }

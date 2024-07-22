@@ -1,6 +1,6 @@
 {
-  "name": "@saras-analytics/angular-grid-layout",
-  "version": "18.0.4",
+  "name": "@biva/angular-grid-layout",
+  "version": "18.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 1234",

@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { KtdGridModule, KtdGridComponent, KtdGridLayout, ktdTrackById } from '@saras-analytics/angular-grid-layout';
+import { KtdGridModule, KtdGridComponent, KtdGridLayout, ktdTrackById } from '@biva/angular-grid-layout';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { ktdArrayRemoveItem } from '../utils';

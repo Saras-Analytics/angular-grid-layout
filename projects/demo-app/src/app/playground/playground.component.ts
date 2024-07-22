@@ -2,7 +2,7 @@ import { Component, ElementRef, Inject, NgZone, OnDestroy, OnInit, ViewChild } f
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
-import { KtdDragEnd, KtdDragStart, ktdGridCompact, KtdGridComponent, KtdGridLayout, KtdGridLayoutItem, KtdResizeEnd, KtdResizeStart, ktdTrackById, KtdGridItemComponent, KtdGridItemPlaceholder } from '@saras-analytics/angular-grid-layout';
+import { KtdDragEnd, KtdDragStart, ktdGridCompact, KtdGridComponent, KtdGridLayout, KtdGridLayoutItem, KtdResizeEnd, KtdResizeStart, ktdTrackById, KtdGridItemComponent, KtdGridItemPlaceholder } from '@biva/angular-grid-layout';
 import { ktdArrayRemoveItem } from '../utils';
 import { DOCUMENT, NgFor, NgIf } from '@angular/common';
 import { coerceNumberProperty } from '@angular/cdk/coercion';

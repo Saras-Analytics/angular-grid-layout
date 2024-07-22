@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { KtdGridComponent, KtdGridLayout, ktdTrackById, KtdGridItemComponent } from '@saras-analytics/angular-grid-layout';
+import { KtdGridComponent, KtdGridLayout, ktdTrackById, KtdGridItemComponent } from '@biva/angular-grid-layout';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { DOCUMENT, NgFor } from '@angular/common';

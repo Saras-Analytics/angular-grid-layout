@@ -3,7 +3,7 @@
  * This file is taken from Angular Material repository.
  */
 
-/* eslint-disable @saras-analytics/prefix-exported-code */
+/* eslint-disable @biva/prefix-exported-code */
 
 /** Parses a CSS time value to milliseconds. */
 function parseCssTimeUnitsToMs(value: string): number {

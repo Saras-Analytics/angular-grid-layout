@@ -1,5 +1,5 @@
 {
-    "name": "@saras-analytics/angular-grid-layout",
+    "name": "@biva/angular-grid-layout",
     "description": "Grid Layout with draggable and resizable items for Angular",
     "homepage": "https://github.com/saras-analytics/angular-grid-layout",
     "bugs": {
@@ -10,7 +10,7 @@
         "url": "git+https://github.com/saras-analytics/angular-grid-layout.git"
     },
     "license": "MIT",
-    "version": "18.0.4",
+    "version": "18.1.0",
     "keywords": [
         "angular",
         "grid",

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { KtdGridComponent, KtdGridItemResizeEvent, KtdGridLayout, ktdTrackById, KtdGridItemComponent, KtdGridItemPlaceholder } from '@saras-analytics/angular-grid-layout';
+import { KtdGridComponent, KtdGridItemResizeEvent, KtdGridLayout, ktdTrackById, KtdGridItemComponent, KtdGridItemPlaceholder } from '@biva/angular-grid-layout';
 import { fromEvent, merge, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { countriesPopulation, countriesPopulationByYear } from './data/countries-population.data';
