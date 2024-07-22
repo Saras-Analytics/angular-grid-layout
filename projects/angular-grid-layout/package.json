@@ -10,7 +10,7 @@
         "url": "git+https://github.com/saras-analytics/angular-grid-layout.git"
     },
     "license": "MIT",
-    "version": "18.0.3",
+    "version": "18.0.4",
     "keywords": [
         "angular",
         "grid",
